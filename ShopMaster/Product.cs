@@ -13,5 +13,10 @@ namespace ShopMaster
         public int Stock { get; set; }
 
         #endregion
+
+        public override string ToString()
+        {
+            return $"{Name} - ${Price} - (Stock:{Stock})";
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 
 namespace ShopMaster
 {
@@ -23,6 +24,30 @@ namespace ShopMaster
                  new Product { Id=10, Name="Jacket", Category="Clothing", Price=120, Stock=15 }
              };
 
+            #endregion
+            #region Task 01 : Smart Product Search
+            #region 1 - Electronics Products
+            Console.WriteLine("--- Electronics ---");
+            List<Product>Electronics= ProductOperation.SearchProduct(catalog, (Product product) => product.Category == "Electronics");
+            ProductOperation.PrintReport(Electronics,(Product item) => Console.WriteLine($"{item.Name} - ${item.Price} - (Stock:{item.Stock})"));
+            #endregion
+            #region 2 - Products Under $50
+            Console.WriteLine("\n--- Under $50 ---");
+            List<Product> ProductsUnder50 = ProductOperation.SearchProduct(catalog, (Product product) => product.Price < 50);
+            ProductOperation.PrintReport(ProductsUnder50, (Product item) => Console.WriteLine($"{item.Name} - ${item.Price} - (Stock:{item.Stock})"));
+            #endregion
+            #region 3 - Products In Stock
+
+            Console.WriteLine("\n--- In Stock ---");
+            List<Product> ProductsInStock = ProductOperation.SearchProduct(catalog, (Product product) => product.Stock>0);
+            ProductOperation.PrintReport(ProductsInStock, (Product item) => Console.WriteLine($"{item.Name} - ${item.Price} - (Stock:{item.Stock})"));
+            #endregion
+            #region 4 - Clothing Under $100
+
+            Console.WriteLine("\n--- Clothing Under $100 ---");
+            List<Product> ClothingUnder100 = ProductOperation.SearchProduct(catalog, (Product product) => product.Price < 100 && product.Category == "Clothing");
+            ProductOperation.PrintReport(ClothingUnder100, (Product item) => Console.WriteLine($"{item.Name} - ${item.Price} - (Stock:{item.Stock})"));
+            #endregion
             #endregion
         }
     }
