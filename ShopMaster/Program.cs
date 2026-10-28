@@ -49,6 +49,16 @@ namespace ShopMaster
             ProductOperation.PrintReport(ClothingUnder100, (Product item) => Console.WriteLine($"{item.Name} - ${item.Price} - (Stock:{item.Stock})"));
             #endregion
             #endregion
+            #region Task03:Custom Report Generator
+            #region Scenario 1 - Short Report
+            Console.WriteLine("\n--- Short Report ---");
+            ProductOperation.PrintReport(catalog, (Product item) => Console.WriteLine($"{item.Name} - ${item.Price}"));
+            #endregion
+            #region Scenario 2  Detailed Report
+            Console.WriteLine("\n--- Detailed Report ---");
+            ProductOperation.PrintReport(catalog, (Product item) => Console.WriteLine($"[{item.Category}] {item.Name} | Price: ${item.Price} | Stock: {item.Stock}"));
+            #endregion
+            #endregion
         }
     }
 }
