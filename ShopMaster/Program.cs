@@ -51,6 +51,7 @@ namespace ShopMaster
             #endregion
             #endregion
             #region Task03:Custom Report Generator
+
             #region Scenario 1 - Short Report
             Console.WriteLine("\n--- Short Report ---");
             ProductOperation.PrintReport(catalog, (Product item) => Console.WriteLine($"{item.Name} - ${item.Price}"));
@@ -67,9 +68,18 @@ namespace ShopMaster
             foreach (var Text in SummaryList) { Console.WriteLine(Text); }
             #endregion
             #region Scenario 4 Price Label
-           Console.WriteLine("\n--- Price Label ---");
+            Console.WriteLine("\n--- Price Label ---");
             List<String> PriceLabelList = ProductOperation.TransformProducts(catalog, (Product item) => { return item.Price > 100 ? $"{item.Name}: Expensive!" : $"{item.Name}: Affordable!"; });
             foreach (var Label in PriceLabelList) { Console.WriteLine(Label); }
+            #endregion
+
+            #endregion
+            #region 3.3 - Filter Products
+
+            #region Scenario 5 - Low-Stock Alert
+            Console.WriteLine("\n--- Low-Stock Alert ---");
+            List<Product> LowStock = ProductOperation.FilterProducts(catalog, (Product item) => item.Stock < 20);
+            ProductOperation.PrintReport(LowStock, (Product item) => Console.WriteLine($" [LOW STOCK] {item.Name}: only {item.Stock} left!"));
             #endregion
             #endregion
         }
