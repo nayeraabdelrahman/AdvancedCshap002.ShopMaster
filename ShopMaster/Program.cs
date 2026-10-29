@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
 
@@ -28,8 +29,8 @@ namespace ShopMaster
             #region Task 01 : Smart Product Search
             #region 1 - Electronics Products
             Console.WriteLine("--- Electronics ---");
-            List<Product>Electronics= ProductOperation.SearchProduct(catalog, (Product product) => product.Category == "Electronics");
-            ProductOperation.PrintReport(Electronics,(Product item) => Console.WriteLine($"{item.Name} - ${item.Price} - (Stock:{item.Stock})"));
+            List<Product> Electronics = ProductOperation.SearchProduct(catalog, (Product product) => product.Category == "Electronics");
+            ProductOperation.PrintReport(Electronics, (Product item) => Console.WriteLine($"{item.Name} - ${item.Price} - (Stock:{item.Stock})"));
             #endregion
             #region 2 - Products Under $50
             Console.WriteLine("\n--- Under $50 ---");
@@ -39,7 +40,7 @@ namespace ShopMaster
             #region 3 - Products In Stock
 
             Console.WriteLine("\n--- In Stock ---");
-            List<Product> ProductsInStock = ProductOperation.SearchProduct(catalog, (Product product) => product.Stock>0);
+            List<Product> ProductsInStock = ProductOperation.SearchProduct(catalog, (Product product) => product.Stock > 0);
             ProductOperation.PrintReport(ProductsInStock, (Product item) => Console.WriteLine($"{item.Name} - ${item.Price} - (Stock:{item.Stock})"));
             #endregion
             #region 4 - Clothing Under $100
@@ -57,6 +58,18 @@ namespace ShopMaster
             #region Scenario 2  Detailed Report
             Console.WriteLine("\n--- Detailed Report ---");
             ProductOperation.PrintReport(catalog, (Product item) => Console.WriteLine($"[{item.Category}] {item.Name} | Price: ${item.Price} | Stock: {item.Stock}"));
+            #endregion
+            #endregion
+            #region 3.2. Transform Products 
+            #region Scenario 3 Summary List
+            Console.WriteLine("\n--- Summary List ---");
+            List<String> SummaryList = ProductOperation.TransformProducts(catalog, (Product item) => { return $"{item.Name} (${item.Price})"; });
+            foreach (var Text in SummaryList) { Console.WriteLine(Text); }
+            #endregion
+            #region Scenario 4 Price Label
+           Console.WriteLine("\n--- Price Label ---");
+            List<String> PriceLabelList = ProductOperation.TransformProducts(catalog, (Product item) => { return item.Price > 100 ? $"{item.Name}: Expensive!" : $"{item.Name}: Affordable!"; });
+            foreach (var Label in PriceLabelList) { Console.WriteLine(Label); }
             #endregion
             #endregion
         }

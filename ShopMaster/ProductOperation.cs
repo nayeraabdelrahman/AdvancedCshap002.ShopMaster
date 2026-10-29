@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Xml.Linq;
 
@@ -20,6 +21,11 @@ namespace ShopMaster
             }
             return result;
         }
+        public static List<Product>FilterProducts(List<Product> products, Predicate<Product> expression)
+        {
+
+            return SearchProduct(products, (Product item) => expression(item));
+        }
         public static void PrintReport(List<Product> filter, Action<Product> action)
         {
             foreach (var item in filter)
@@ -27,6 +33,19 @@ namespace ShopMaster
                 action(item);
             }
         }
-       
+
+        public static List<string> TransformProducts(List<Product> collage, Func<Product, string> transfereToString)
+        {
+            List<string> result = [];
+            foreach (var item in collage)
+            {
+                string PriceText = transfereToString(item);
+                
+                result.Add(PriceText);
+            }
+            return result;
+        }
+     
+
     }
 }
