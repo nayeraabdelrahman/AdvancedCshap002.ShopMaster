@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 
 namespace ShopMaster
 {
@@ -23,6 +25,62 @@ namespace ShopMaster
                  new Product { Id=10, Name="Jacket", Category="Clothing", Price=120, Stock=15 }
              };
 
+            #endregion
+            #region Task 01 : Smart Product Search
+            #region 1 - Electronics Products
+            Console.WriteLine("--- Electronics ---");
+            List<Product> Electronics = ProductOperation.SearchProduct(catalog, (Product product) => product.Category == "Electronics");
+            ProductOperation.PrintReport(Electronics, (Product item) => Console.WriteLine($"{item.Name} - ${item.Price} - (Stock:{item.Stock})"));
+            #endregion
+            #region 2 - Products Under $50
+            Console.WriteLine("\n--- Under $50 ---");
+            List<Product> ProductsUnder50 = ProductOperation.SearchProduct(catalog, (Product product) => product.Price < 50);
+            ProductOperation.PrintReport(ProductsUnder50, (Product item) => Console.WriteLine($"{item.Name} - ${item.Price} - (Stock:{item.Stock})"));
+            #endregion
+            #region 3 - Products In Stock
+
+            Console.WriteLine("\n--- In Stock ---");
+            List<Product> ProductsInStock = ProductOperation.SearchProduct(catalog, (Product product) => product.Stock > 0);
+            ProductOperation.PrintReport(ProductsInStock, (Product item) => Console.WriteLine($"{item.Name} - ${item.Price} - (Stock:{item.Stock})"));
+            #endregion
+            #region 4 - Clothing Under $100
+
+            Console.WriteLine("\n--- Clothing Under $100 ---");
+            List<Product> ClothingUnder100 = ProductOperation.SearchProduct(catalog, (Product product) => product.Price < 100 && product.Category == "Clothing");
+            ProductOperation.PrintReport(ClothingUnder100, (Product item) => Console.WriteLine($"{item.Name} - ${item.Price} - (Stock:{item.Stock})"));
+            #endregion
+            #endregion
+            #region Task03:Custom Report Generator
+
+            #region Scenario 1 - Short Report
+            Console.WriteLine("\n--- Short Report ---");
+            ProductOperation.PrintReport(catalog, (Product item) => Console.WriteLine($"{item.Name} - ${item.Price}"));
+            #endregion
+            #region Scenario 2  Detailed Report
+            Console.WriteLine("\n--- Detailed Report ---");
+            ProductOperation.PrintReport(catalog, (Product item) => Console.WriteLine($"[{item.Category}] {item.Name} | Price: ${item.Price} | Stock: {item.Stock}"));
+            #endregion
+            #endregion
+            #region 3.2. Transform Products 
+            #region Scenario 3 Summary List
+            Console.WriteLine("\n--- Summary List ---");
+            List<String> SummaryList = ProductOperation.TransformProducts(catalog, (Product item) => { return $"{item.Name} (${item.Price})"; });
+            foreach (var Text in SummaryList) { Console.WriteLine(Text); }
+            #endregion
+            #region Scenario 4 Price Label
+            Console.WriteLine("\n--- Price Label ---");
+            List<String> PriceLabelList = ProductOperation.TransformProducts(catalog, (Product item) => { return item.Price > 100 ? $"{item.Name}: Expensive!" : $"{item.Name}: Affordable!"; });
+            foreach (var Label in PriceLabelList) { Console.WriteLine(Label); }
+            #endregion
+
+            #endregion
+            #region 3.3 - Filter Products
+
+            #region Scenario 5 - Low-Stock Alert
+            Console.WriteLine("\n--- Low-Stock Alert ---");
+            List<Product> LowStock = ProductOperation.FilterProducts(catalog, (Product item) => item.Stock < 20);
+            ProductOperation.PrintReport(LowStock, (Product item) => Console.WriteLine($" [LOW STOCK] {item.Name}: only {item.Stock} left!"));
+            #endregion
             #endregion
         }
     }
